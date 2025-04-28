@@ -4,4 +4,13 @@
 node_modules
 public/
 
+services/short-video-creator/output/
+services/short-video-creator/temp/
+services/short-video-creator/.env
+
+whisper.cpp/ggml-small.bin
+whisper.cpp/ggml-base.bin
+whisper.cpp/ggml-medium.bin
+whisper.cpp/ggml-large-v3.bin
+
 package-lock.json
