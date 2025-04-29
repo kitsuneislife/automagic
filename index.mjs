@@ -33,9 +33,9 @@ import generateVideo from './services/short-video-creator/index.js';
 async function main() {
     try {
         const news = NewsHandler.runDynamicQuery('SELECT * FROM news WHERE id = 1');
-        const prompt = news.description
+        const prompt = news[0].description
         console.log('Notícias Encontradas:', news);
-        const video = await generateVideo(prompt, news);
+        const video = await generateVideo(prompt, news[0]);
 
     } catch (error) {
         console.error('Erro no processo principal:', error.message);

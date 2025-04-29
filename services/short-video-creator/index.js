@@ -6,18 +6,19 @@ import { Caption } from "./modules/caption.mjs";
 import { Convert } from "./modules/convert.mjs";
 import { Scenario } from "./modules/scenario.mjs";
 import { Composer } from "./modules/composer.mjs";
+import { renderVideo } from "./render.mjs";
 import { customAlphabet } from "nanoid";
 import Database from "better-sqlite3";
 
 // Configurações gerais
-const USE_CACHE = false; // Trocar para `true` para usar cache
+const USE_CACHE = true; // Trocar para `true` para usar cache
 const TEMP_FOLDER = path.join(process.cwd(), "public", "cache");
 const ROTEIRO_PATH = path.join(TEMP_FOLDER, "roteiro.txt");
 const AUDIO_PATH = path.join(TEMP_FOLDER, "audio.mp3");
 const AUDIO_WAV_PATH = path.join(TEMP_FOLDER, "audio.wav");
-const CAPTIONS_PATH = path.join(TEMP_FOLDER, "captions.json");
+const CAPTIONS_PATH = path.join(TEMP_FOLDER, "audio.json");
 const SCENES_PATH = path.join(TEMP_FOLDER, "video", "scenes.json");
-const FINAL_VIDEO_PATH = path.join(TEMP_FOLDER, "video", "final.mp4");
+const FINAL_VIDEO_PATH = path.join(TEMP_FOLDER, "scenario.mp4");
 
 // Configuração do banco de dados SQLite
 const db = new Database(path.join(process.cwd(), "public", "sqlite", "system.db"));
@@ -141,7 +142,7 @@ export default async function generateVideo(prompt, news) {
 
     // Etapa 7: Salvar vídeo final e registrar no banco de dados
     const globalId = nanoid();
-    await saveFinalVideo(globalId, news);
+    await renderVideo("./public/cache/Remotion.tsx", "CaptionedVideo", news);
 
     console.log("✅ Vídeo gerado e salvo com sucesso.");
   } catch (error) {

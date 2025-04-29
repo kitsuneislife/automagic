@@ -8,6 +8,23 @@ import Database from "better-sqlite3";
 
 // Configuração do banco de dados SQLite
 const db = new Database(path.join(process.cwd(), "public", "sqlite", "system.db"));
+const initializeVideoTable = () => {
+  db.prepare(`
+      CREATE TABLE IF NOT EXISTS videos (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          globalId TEXT NOT NULL UNIQUE,
+          path TEXT NOT NULL,
+          title TEXT NOT NULL,
+          description TEXT,
+          content TEXT,
+          url TEXT NOT NULL,
+          source TEXT,
+          publishedAt TEXT,
+          createdAt TEXT DEFAULT CURRENT_TIMESTAMP
+      );
+  `).run();
+};
+initializeVideoTable();
 
 // Gerador de IDs globais únicos
 const alphabet = "abcdefghijklmnopqrstuvwxyz0123456789";

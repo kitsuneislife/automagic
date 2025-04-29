@@ -229,9 +229,9 @@ const RemotionRoot: React.FC = () => (
     width={1080}
     height={1920}
     defaultProps={{
-      src: staticFile("video/scenario.mp4"),
-      audioSrc: staticFile("video/audio.wav"),
-      captionsSrc: staticFile("video/audio.json"),
+      src: staticFile("cache/video/scenario.mp4"),
+      audioSrc: staticFile("cache/video/audio.wav"),
+      captionsSrc: staticFile("cache/video/audio.json"),
     }}
   />
 );

@@ -37,6 +37,7 @@ export const Writer = async (prompt) => {
         { role: "system", content: SYSTEM_PROMPT },
         { role: "user", content: prompt },
       ],
+      response_format: { type: "json_object" }
     });
 
     console.log("🟢 Roteiro gerado com sucesso!");
