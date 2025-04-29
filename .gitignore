@@ -4,6 +4,9 @@
 node_modules
 public/
 
+test.js
+
+
 services/short-video-creator/output/
 services/short-video-creator/temp/
 services/short-video-creator/.env

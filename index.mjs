@@ -1,44 +1,31 @@
+import fs from 'fs'
+import { serve } from '@hono/node-server'
+import { Hono } from 'hono'
+import { cors } from 'hono/cors'
+import { prettyJSON } from 'hono/pretty-json'
 
-//import NewsHandler from './services/news-database/index.mjs';
-// (async () => {
-//     try {
-//         // Buscar e armazenar notícias da NewsAPI
-//         const statsNewsAPI = await NewsHandler.fetchAndStoreNews('newsapi', 'us');
-//         console.log('Estatísticas NewsAPI:', statsNewsAPI);
+const app = new Hono()
+app.use('*', cors())
+app.use('*', prettyJSON())
 
-//         // Buscar e armazenar notícias da GNews
-//         const statsGNews = await NewsHandler.fetchAndStoreNews('gnews', 'br');
-//         console.log('Estatísticas GNews:', statsGNews);
-
-//         // Buscar e armazenar notícias da MediaStack
-//         const statsMediaStack = await NewsHandler.fetchAndStoreNews('mediastack', 'br');
-//         console.log('Estatísticas MediaStack:', statsMediaStack);
-
-//         // Buscar notícias do banco de dados
-//         const news = NewsHandler.getNews({ limit: 5 });
-//         console.log('Notícias Encontradas:', news);
-
-//     } catch (error) {
-//         console.error('Erro no processo principal:', error.message);
-//     } finally {
-//         // Encerrar a conexão com o banco de dados
-//         NewsHandler.closeDatabase();
-//     }
-// })();
-
-import NewsHandler from './services/news-database/index.mjs';
-import generateVideo from './services/short-video-creator/index.js';
-
-
-async function main() {
-    try {
-        const news = NewsHandler.runDynamicQuery('SELECT * FROM news WHERE id = 1');
-        const prompt = news[0].description
-        console.log('Notícias Encontradas:', news);
-        const video = await generateVideo(prompt, news[0]);
-
-    } catch (error) {
-        console.error('Erro no processo principal:', error.message);
-    }
+const initializeRoutes = (app) => {
+  const routesFolder = fs.readdirSync('./routes')
+  routesFolder.forEach(route => {
+    import(`./routes/${route}`).then(routeFile => {
+      const { method, path, Process } = routeFile
+      if (method === 'GET') {
+        app.get(path, (c) => Process(c))
+      } else if (method === 'POST') {
+        app.post(path, (c) => Process(c))
+      }
+    })
+  })
 }
-main()
+initializeRoutes(app)
+
+serve({
+  fetch: app.fetch,
+  port: 3000
+}, (info) => {
+  console.log(`Server is running on http://localhost:${info.port}`)
+})

@@ -80,7 +80,7 @@ class NewsDatabase {
     initializeDatabase() {
         // Criar tabela para notícias reescritas
         this.db.prepare(`
-            CREATE TABLE IF NOT EXISTS rewritten_news (
+            CREATE TABLE IF NOT EXISTS news_rewritten (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 globalId TEXT NOT NULL UNIQUE,
                 title TEXT NOT NULL,
