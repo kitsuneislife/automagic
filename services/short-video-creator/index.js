@@ -1,11 +1,11 @@
 import fs from "fs";
 import path from "path";
-import { Writer } from "./services/writer.mjs";
-import { Synthesis } from "./services/synthesis.mjs";
-import { Caption } from "./services/caption.mjs";
-import { Convert } from "./services/convert.mjs";
-import { Scenario } from "./services/scenario.mjs";
-import { Composer } from "./services/composer.mjs";
+import { Writer } from "./modules/writer.mjs";
+import { Synthesis } from "./modules/synthesis.mjs";
+import { Caption } from "./modules/caption.mjs";
+import { Convert } from "./modules/convert.mjs";
+import { Scenario } from "./modules/scenario.mjs";
+import { Composer } from "./modules/composer.mjs";
 import { customAlphabet } from "nanoid";
 import Database from "better-sqlite3";
 
